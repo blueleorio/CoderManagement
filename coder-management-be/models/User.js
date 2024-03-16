@@ -1,14 +1,25 @@
 const mongoose = require("mongoose");
 //Create schema
-const fooSchema = mongoose.Schema(
+const userSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
-    flag: { type: Boolean, enum: [true, false], require: true },
+    role: {
+      type: String,
+      enum: ["employee", "manager"],
+      default: "employee",
+    },
+    tasks: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Task",
+      },
+    ],
   },
+
   {
     timestamps: true,
   }
 );
 //Create and export model
-const Foo = mongoose.model("Foo", fooSchema);
-module.exports = Foo;
+const User = mongoose.model("User", userSchema);
+module.exports = User;

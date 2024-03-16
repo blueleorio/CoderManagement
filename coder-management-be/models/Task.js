@@ -1,19 +1,29 @@
 const mongoose = require("mongoose");
 //Create schema
-const booSchema = mongoose.Schema(
+const taskSchema = mongoose.Schema(
   {
-    name: { type: String, required: true },
-    description: { type: String, required: true },
-    referenceTo: {
-      type: mongoose.SchemaTypes.ObjectId,
+    name: {
+      type: String,
       required: true,
-      ref: "Foo",
-    }, //one to one required
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ["pending", "working", "review", "done", "archive"],
+      default: "pending",
+    },
+    assignedTo: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   {
     timestamps: true,
   }
 );
 //Create and export model
-const Boo = mongoose.model("Boo", booSchema);
-module.exports = Boo;
+const Task = mongoose.model("Task", taskSchema);
+module.exports = Task;
