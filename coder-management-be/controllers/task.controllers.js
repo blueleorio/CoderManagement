@@ -53,5 +53,57 @@ taskController.getAllTasks = async (req, res, next) => {
     next(err);
   }
 };
+
+//Update a Task
+taskController.updateTaskById = async (req, res, next) => {
+  //in real project you will getting id from req. For updating and deleting, it is recommended for you to use unique identifier such as _id to avoid duplication
+  //you will also get updateInfo from req
+  // empty target and info mean update nothing
+  const targetId = null;
+  const updateInfo = "";
+
+  //options allow you to modify query. e.g new true return lastest update of data
+  const options = { new: true };
+  try {
+    //mongoose query
+    const updated = await Task.findByIdAndUpdate(targetId, updateInfo, options);
+
+    sendResponse(
+      res,
+      200,
+      true,
+      { data: updated },
+      null,
+      "Update Task success"
+    );
+  } catch (err) {
+    next(err);
+  }
+};
+
+//Delete Task
+taskController.deleteTaskById = async (req, res, next) => {
+  //in real project you will getting id from req. For updating and deleting, it is recommended for you to use unique identifier such as _id to avoid duplication
+
+  // empty target mean delete nothing
+  const targetId = null;
+  //options allow you to modify query. e.g new true return lastest update of data
+  const options = { new: true };
+  try {
+    //mongoose query
+    const updated = await Task.findByIdAndDelete(targetId, options);
+
+    sendResponse(
+      res,
+      200,
+      true,
+      { data: updated },
+      null,
+      "Delete Task success"
+    );
+  } catch (err) {
+    next(err);
+  }
+};
 //export
 module.exports = taskController;

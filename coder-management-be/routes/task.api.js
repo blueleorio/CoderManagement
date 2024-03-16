@@ -3,6 +3,8 @@ const router = express.Router();
 const {
   createTask,
   getAllTasks,
+  updateTaskById,
+  deleteTaskById,
 } = require("../controllers/task.controllers.js");
 
 //Read
@@ -20,6 +22,22 @@ router.get("/", getAllTasks);
  * @access public
  */
 router.post("/", createTask);
+
+//Update
+/**
+ * @route PUT api/Task
+ * @description update a Task
+ * @access public
+ */
+router.put("/:id", updateTaskById);
+
+//Delete
+/**
+ * @route DELETE api/Task
+ * @description delet a Task
+ * @access public
+ */
+router.delete("/:id", deleteTaskById);
 
 //export
 module.exports = router;
