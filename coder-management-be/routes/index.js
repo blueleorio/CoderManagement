@@ -30,9 +30,9 @@ router.get("/template/:test", async (req, res, next) => {
 });
 
 const userRouter = require("./user.api.js");
-router.use("/user", userRouter);
+router.use("/users", userRouter);
 
 const taskRouter = require("./task.api.js");
-router.use("/task", taskRouter);
+router.use("/tasks", taskRouter);
 
 module.exports = router;

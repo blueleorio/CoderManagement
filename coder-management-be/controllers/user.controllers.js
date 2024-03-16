@@ -6,10 +6,7 @@ const userController = {};
 //Create a User
 userController.createUser = async (req, res, next) => {
   //in real project you will getting info from req
-  const info = {
-    name: "User",
-    flag: false,
-  };
+  const info = req.body;
   try {
     //always remember to control your inputs
     if (!info) throw new AppError(402, "Bad Request", "Create User Error");
@@ -43,6 +40,33 @@ userController.getAllUsers = async (req, res, next) => {
       { data: listOfFound },
       null,
       "Found list of Users success"
+    );
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Get single User by iD
+userController.getUser = async (req, res, next) => {
+  const targetId = req.params.id;
+  const includeTasks = req.query.tasks === "true";
+
+  try {
+    let user;
+
+    if (includeTasks) {
+      user = await User.findById(targetId).populate("tasks");
+    } else {
+      user = await User.findById(targetId);
+    }
+
+    sendResponse(
+      res,
+      200,
+      true,
+      { data: user },
+      null,
+      `Found single User at ${targetId} success`
     );
   } catch (err) {
     next(err);

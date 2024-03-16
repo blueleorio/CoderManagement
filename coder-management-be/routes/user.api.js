@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   createUser,
   getAllUsers,
+  getUser,
   updateUserById,
   deleteUserById,
 } = require("../controllers/user.controllers.js");
@@ -14,6 +15,14 @@ const {
  * @access public
  */
 router.get("/", getAllUsers);
+
+//Read
+/**
+ * @route GET api/User
+ * @description get information of single User
+ * @access public
+ */
+router.get("/:id", getUser);
 
 //Create
 /**

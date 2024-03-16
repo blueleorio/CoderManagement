@@ -14,11 +14,14 @@ const taskSchema = mongoose.Schema(
       type: String,
       enum: ["pending", "working", "review", "done", "archive"],
       default: "pending",
+      required: true,
     },
-    assignedTo: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
+    assignedTo: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     createdAt: {
       type: Date,
       default: Date.now,
