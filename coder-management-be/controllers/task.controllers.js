@@ -2,14 +2,16 @@ const { sendResponse, AppError } = require("../helpers/utils.js");
 
 const Task = require("../models/Task.js");
 
+// Thanh id: 65f5ece8252edcc78be5a573
 const taskController = {};
 //Create a Task
 taskController.createTask = async (req, res, next) => {
   //in real project you will getting info from req
   const info = {
-    name: "any",
-    description: "any Task",
-    referenceTo: "62cc2ac20dd407751c1e45c6",
+    name: "CoderManagement Project",
+    description: "Adding creating Task API call to the project",
+    status: "pending",
+    assignedTo: ["65f5ece8252edcc78be5a573"],
   };
   try {
     //always remember to control your inputs

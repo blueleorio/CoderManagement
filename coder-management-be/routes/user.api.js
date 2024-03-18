@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+
+const { validationResult } = require("express-validator");
 const {
   createUser,
   getAllUsers,
@@ -22,7 +24,7 @@ router.get("/", getAllUsers);
  * @description get information of single User
  * @access public
  */
-router.get("/:id", getUser);
+router.get("/:id", idValidationRules, getUser);
 
 //Create
 /**
@@ -30,7 +32,13 @@ router.get("/:id", getUser);
  * @description create a User
  * @access public
  */
-router.post("/", createUser);
+router.post("/", createUserValidationRules, (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  createUser(req, res, next);
+});
 
 //Update
 /**
@@ -38,7 +46,7 @@ router.post("/", createUser);
  * @description update a User
  * @access public
  */
-router.put("/:id", updateUserById);
+router.put("/:id", idValidationRules, updateUserById);
 
 //Delete
 /**
@@ -46,7 +54,7 @@ router.put("/:id", updateUserById);
  * @description delet a User
  * @access public
  */
-router.delete("/:id", deleteUserById);
+router.delete("/:id", idValidationRules, deleteUserById);
 
 //export
 module.exports = router;

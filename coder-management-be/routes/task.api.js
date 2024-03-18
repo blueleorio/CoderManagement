@@ -1,5 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const { validationResult } = require("express-validator");
+const {
+  createTaskValidationRules,
+  idValidationRules,
+} = require("../controllers/validationRules.js");
 const {
   createTask,
   getAllTasks,
@@ -21,7 +26,13 @@ router.get("/", getAllTasks);
  * @description create a Task
  * @access public
  */
-router.post("/", createTask);
+router.post("/", createTaskValidationRules, (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  createTask(req, res, next);
+});
 
 //Update
 /**
@@ -29,7 +40,7 @@ router.post("/", createTask);
  * @description update a Task
  * @access public
  */
-router.put("/:id", updateTaskById);
+router.put("/:id", idValidationRules, updateTaskById);
 
 //Delete
 /**
@@ -37,7 +48,7 @@ router.put("/:id", updateTaskById);
  * @description delet a Task
  * @access public
  */
-router.delete("/:id", deleteTaskById);
+router.delete("/:id", idValidationRules, deleteTaskById);
 
 //export
 module.exports = router;

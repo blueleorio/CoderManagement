@@ -1,6 +1,8 @@
 const { sendResponse, AppError } = require("../helpers/utils.js");
 
 var express = require("express");
+//importing query from <express-validator></express-validator>
+const { body, param, validationResult } = require("express-validator");
 var router = express.Router();
 
 /* GET home page. */
