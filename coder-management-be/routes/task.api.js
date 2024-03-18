@@ -19,7 +19,7 @@ const {
  * @description get list of Tasks
  * @access public
  */
-router.get("/", getAllTasks);
+router.get("/:taskId?", idValidationRules, getAllTasks);
 
 //Create
 /**
@@ -41,14 +41,14 @@ router.post("/", createTaskValidationRules, (req, res, next) => {
  * @description update a Task
  * @access public
  */
-router.put("/:taskId/update", idValidationRules, updateTaskById);
+router.put("/updateTaskInfo/:taskId", idValidationRules, updateTaskById);
 
 /**
  * @route PUT api/boo
  * @description assigned new use to task
  * @access public
  */
-router.put("/:taskId/addUser", idValidationRules, addUserToTask);
+router.put("/addUserToTask/:taskId", idValidationRules, addUserToTask);
 
 //Delete
 /**

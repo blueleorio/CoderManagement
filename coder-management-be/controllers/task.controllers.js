@@ -32,7 +32,8 @@ taskController.createTask = async (req, res, next) => {
 taskController.getAllTasks = async (req, res, next) => {
   //in real project you will getting condition from from req then construct the filter object for query
   // empty filter mean get all
-  const filter = {};
+  const { taskId } = req.params;
+  const filter = taskId ? { _id: taskId } : {};
   try {
     //mongoose query
     const listOfFound = await Task.find(filter).populate("assignedTo");
@@ -84,7 +85,7 @@ taskController.addUserToTask = async (req, res, next) => {
   try {
     let task = await Task.findByIdAndUpdate(
       taskId,
-      { $push: { assignedTo: ref } },
+      { $addToSet: { assignedTo: ref } },
       { new: true, useFindAndModify: false }
     );
     sendResponse(
