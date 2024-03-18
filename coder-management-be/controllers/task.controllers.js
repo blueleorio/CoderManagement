@@ -7,12 +7,7 @@ const taskController = {};
 //Create a Task
 taskController.createTask = async (req, res, next) => {
   //in real project you will getting info from req
-  const info = {
-    name: "CoderManagement Project",
-    description: "Adding creating Task API call to the project",
-    status: "pending",
-    assignedTo: ["65f5ece8252edcc78be5a573"],
-  };
+  const info = req.body;
   try {
     //always remember to control your inputs
     if (!info) throw new AppError(402, "Bad Request", "Create Task Error");
@@ -40,7 +35,7 @@ taskController.getAllTasks = async (req, res, next) => {
   const filter = {};
   try {
     //mongoose query
-    const listOfFound = await Task.find(filter).populate("referenceTo");
+    const listOfFound = await Task.find(filter).populate("assignedTo");
     //this to query data from the reference and append to found result.
 
     sendResponse(
@@ -77,6 +72,28 @@ taskController.updateTaskById = async (req, res, next) => {
       { data: updated },
       null,
       "Update Task success"
+    );
+  } catch (err) {
+    next(err);
+  }
+};
+taskController.addUserToTask = async (req, res, next) => {
+  const { taskId } = req.params;
+  const { ref } = req.body;
+
+  try {
+    let task = await Task.findByIdAndUpdate(
+      taskId,
+      { $push: { assignedTo: ref } },
+      { new: true, useFindAndModify: false }
+    );
+    sendResponse(
+      res,
+      200,
+      true,
+      { data: task },
+      null,
+      "Add user to task success"
     );
   } catch (err) {
     next(err);

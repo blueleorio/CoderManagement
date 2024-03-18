@@ -10,6 +10,7 @@ const {
   getAllTasks,
   updateTaskById,
   deleteTaskById,
+  addUserToTask,
 } = require("../controllers/task.controllers.js");
 
 //Read
@@ -40,7 +41,14 @@ router.post("/", createTaskValidationRules, (req, res, next) => {
  * @description update a Task
  * @access public
  */
-router.put("/:id", idValidationRules, updateTaskById);
+router.put("/:taskId/update", idValidationRules, updateTaskById);
+
+/**
+ * @route PUT api/boo
+ * @description assigned new use to task
+ * @access public
+ */
+router.put("/:taskId/addUser", idValidationRules, addUserToTask);
 
 //Delete
 /**
