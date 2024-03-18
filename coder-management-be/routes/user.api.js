@@ -1,5 +1,9 @@
 const express = require("express");
 const router = express.Router();
+const {
+  createUserValidationRules,
+  idValidationRules,
+} = require("../controllers/validationRules.js");
 
 const { validationResult } = require("express-validator");
 const {
