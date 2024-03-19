@@ -74,15 +74,46 @@ taskController.updateTaskById = async (req, res, next) => {
   //in real project you will getting id from req. For updating and deleting, it is recommended for you to use unique identifier such as _id to avoid duplication
   //you will also get updateInfo from req
   // empty target and info mean update nothing
-  const targetId = null;
-  const updateInfo = "";
+  const targetId = req.params.taskId;
+  const updateInfo = req.body;
 
   //options allow you to modify query. e.g new true return lastest update of data
-  const options = { new: true };
+  const options = { new: true, useFindAndModify: false };
   try {
+    // Find the task to be updated
+    const task = await Task.findById(targetId);
+
+    // If the task's status is 'done' and the update tries to change the status to something other than 'archive', return an error
+    if (
+      task.status === "done" &&
+      updateInfo.status &&
+      updateInfo.status !== "archive"
+    ) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Cannot change status from 'done' to anything other than 'archive'",
+      });
+    }
+
+    // If the task's status is 'archive', prevent any changes to the status
+    if (
+      task.status === "archive" &&
+      updateInfo.status &&
+      updateInfo.status !== "archive"
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: "Cannot change status from 'archive'",
+      });
+    }
     //mongoose query
     const updated = await Task.findByIdAndUpdate(targetId, updateInfo, options);
-
+    if (!updated) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Task not found" });
+    }
     sendResponse(
       res,
       200,
@@ -95,6 +126,7 @@ taskController.updateTaskById = async (req, res, next) => {
     next(err);
   }
 };
+// Assign a user to a Task
 taskController.addUserToTask = async (req, res, next) => {
   const { taskId } = req.params;
   const { ref } = req.body;

@@ -40,7 +40,7 @@ router.get("/template/:test", async (req, res, next) => {
   }
 });
 
-router.get("/slow", (req, res, next) => {
+router.get("/slow", async (req, res, next) => {
   try {
     setTimeout(() => {
       res.status(200).send("Slow response Testing");
