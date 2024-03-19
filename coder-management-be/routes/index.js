@@ -5,6 +5,15 @@ var express = require("express");
 const { body, param, validationResult } = require("express-validator");
 var router = express.Router();
 
+// Set a timeout of 15 seconds for all API calls
+router.use((req, res, next) => {
+  req.setTimeout(15000, () => {
+    let err = new Error("Request Timeout");
+    err.status = 408;
+    next(err);
+  });
+  next();
+});
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.status(200).send("Welcome to CoderSchool!");
@@ -26,6 +35,16 @@ router.get("/template/:test", async (req, res, next) => {
         "template success"
       );
     }
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get("/slow", (req, res, next) => {
+  try {
+    setTimeout(() => {
+      res.status(200).send("Slow response Testing");
+    }, 20000);
   } catch (err) {
     next(err);
   }
