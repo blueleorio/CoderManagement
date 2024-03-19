@@ -33,12 +33,19 @@ taskController.getAllTasks = async (req, res, next) => {
   //in real project you will getting condition from from req then construct the filter object for query
   // empty filter mean get all
   const { taskId } = req.params;
-  const filter = taskId ? { _id: taskId } : {};
+  const filter = { isDeleted: false };
+  if (taskId) {
+    filter._id = taskId;
+  }
   try {
     //mongoose query
     const listOfFound = await Task.find(filter).populate("assignedTo");
     //this to query data from the reference and append to found result.
-
+    if (taskId && listOfFound.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Task not found" });
+    }
     sendResponse(
       res,
       200,
@@ -106,18 +113,23 @@ taskController.deleteTaskById = async (req, res, next) => {
   //in real project you will getting id from req. For updating and deleting, it is recommended for you to use unique identifier such as _id to avoid duplication
 
   // empty target mean delete nothing
-  const targetId = null;
+  const targetId = req.params.taskId;
   //options allow you to modify query. e.g new true return lastest update of data
   const options = { new: true };
   try {
     //mongoose query
-    const updated = await Task.findByIdAndDelete(targetId, options);
+    const deleted = await Task.findByIdAndUpdate(
+      targetId,
+      { isDeleted: true },
+      options
+    );
+    if (!deleted) throw new AppError("Task not found", 404);
 
     sendResponse(
       res,
       200,
       true,
-      { data: updated },
+      { data: deleted },
       null,
       "Delete Task success"
     );

@@ -56,7 +56,7 @@ router.put("/addUserToTask/:taskId", idValidationRules, addUserToTask);
  * @description delet a Task
  * @access public
  */
-router.delete("/:id", idValidationRules, deleteTaskById);
+router.delete("/:taskId", idValidationRules, deleteTaskById);
 
 //export
 module.exports = router;
