@@ -15,6 +15,15 @@ taskController.createTask = async (req, res, next) => {
 
     //mongoose query
     const created = await Task.create(info);
+
+    // If the assignedTo field is an array and is not empty, update each user
+    if (Array.isArray(info.assignedTo) && info.assignedTo.length > 0) {
+      await User.updateMany(
+        { _id: { $in: info.assignedTo } },
+        { $addToSet: { tasks: created._id } }
+      );
+    }
+
     sendResponse(
       res,
       200,
@@ -95,6 +104,18 @@ taskController.addUserToTask = async (req, res, next) => {
       { $addToSet: { assignedTo: ref } },
       { new: true, useFindAndModify: false }
     );
+    // Update the user document with the task ID
+    let user = await User.findByIdAndUpdate(
+      ref,
+      { $addToSet: { tasks: taskId } },
+      { new: true, useFindAndModify: false }
+    );
+
+    if (!task || !user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Task or user not found" });
+    }
     sendResponse(
       res,
       200,
