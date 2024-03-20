@@ -1,0 +1,21 @@
+[{
+  "_id": {
+    "$oid": "65f94c1d2a84ec91110a6194"
+  },
+  "name": "Assign/Unassign User & Task",
+  "description": "Update taskId and userId in one - to - many relationship ",
+  "status": "archive",
+  "assignedTo": [
+    {
+      "$oid": "65f877081835f65dc46291aa"
+    }
+  ],
+  "isDeleted": false,
+  "createdAt": {
+    "$date": "2024-03-19T08:26:05.515Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-19T09:01:05.616Z"
+  },
+  "__v": 0
+}]

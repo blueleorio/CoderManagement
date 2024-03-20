@@ -1,0 +1,106 @@
+[{
+  "_id": {
+    "$oid": "65f5e7be0b371d528d06e0f0"
+  },
+  "name": "Virginie",
+  "role": "employee",
+  "tasks": []
+},
+{
+  "_id": {
+    "$oid": "65f5e7be0b371d528d06e0f1"
+  },
+  "name": "Chance",
+  "role": "employee",
+  "tasks": []
+},
+{
+  "_id": {
+    "$oid": "65f5e7be0b371d528d06e0f2"
+  },
+  "name": "Selmer",
+  "role": "employee",
+  "tasks": []
+},
+{
+  "_id": {
+    "$oid": "65f5e7be0b371d528d06e0f3"
+  },
+  "name": "Solon",
+  "role": "employee",
+  "tasks": []
+},
+{
+  "_id": {
+    "$oid": "65f5e7be0b371d528d06e0f4"
+  },
+  "name": "Bettye",
+  "role": "employee",
+  "tasks": []
+},
+{
+  "_id": {
+    "$oid": "65f5e7be0b371d528d06e0f5"
+  },
+  "name": "Wayne",
+  "role": "employee",
+  "tasks": []
+},
+{
+  "_id": {
+    "$oid": "65f5e7be0b371d528d06e0f6"
+  },
+  "name": "Geovanni",
+  "role": "employee",
+  "tasks": []
+},
+{
+  "_id": {
+    "$oid": "65f5e7be0b371d528d06e0f7"
+  },
+  "name": "Burdette",
+  "role": "employee",
+  "tasks": []
+},
+{
+  "_id": {
+    "$oid": "65f5e7be0b371d528d06e0f8"
+  },
+  "name": "Lamar",
+  "role": "employee",
+  "tasks": []
+},
+{
+  "_id": {
+    "$oid": "65f5ece8252edcc78be5a573"
+  },
+  "name": "Thanh",
+  "role": "employee",
+  "tasks": [],
+  "createdAt": {
+    "$date": "2024-03-16T19:03:04.827Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-16T19:03:04.827Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "65f877081835f65dc46291aa"
+  },
+  "name": "Shiba Inu",
+  "role": "employee",
+  "tasks": [
+    {
+      "$oid": "65f94c1d2a84ec91110a6194"
+    }
+  ],
+  "createdAt": {
+    "$date": "2024-03-18T17:16:56.563Z"
+  },
+  "updatedAt": {
+    "$date": "2024-03-19T08:26:05.527Z"
+  },
+  "__v": 0
+}]
